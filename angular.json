@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "stock-flow-web": {
+    "ims": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -19,8 +19,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/stock-flow-web",
-            "baseHref": "/stock-flow-web/",
+            "outputPath": "dist/ims",
+            "baseHref": "/ims/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "stock-flow-web:build:production"
+              "browserTarget": "ims:build:production"
             },
             "development": {
-              "browserTarget": "stock-flow-web:build:development"
+              "browserTarget": "ims:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "stock-flow-web:build"
+            "browserTarget": "ims:build"
           }
         },
         "test": {
