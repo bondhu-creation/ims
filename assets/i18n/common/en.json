@@ -1,0 +1,12 @@
+{
+  "common": {
+    "action": {
+      "reset": "Reset",
+      "save_as_draft": "Save as Draft",
+      "generate_invoice": "Generate Invoice",
+      "product_return": "Return Product",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    }
+  }
+}
