@@ -61,9 +61,9 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       BrowserModule,
       BrowserAnimationsModule,
-      HttpClientModule,
       AppRoutingModule,
       CloudinaryModule,
+      HttpClientModule,
       NgZorroCustomModule,
       TranslateModule.forRoot({
         loader: {

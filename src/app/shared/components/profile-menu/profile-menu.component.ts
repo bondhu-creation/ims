@@ -6,18 +6,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile-menu',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NgZorroCustomModule,
-    AngularSvgIconModule,
-    FormsModule,
-  ],
-  templateUrl: './profile-menu.component.html',
-  styleUrls: ['./profile-menu.component.scss'],
+    selector: 'app-profile-menu',
+    imports: [
+        CommonModule,
+        NgZorroCustomModule,
+        AngularSvgIconModule,
+        FormsModule,
+    ],
+    templateUrl: './profile-menu.component.html',
+    styleUrls: ['./profile-menu.component.scss']
 })
 export class ProfileMenuComponent implements OnInit {
   @Output() readonly actionEmitter: EventEmitter<object> = new EventEmitter();
@@ -30,7 +30,8 @@ export class ProfileMenuComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _notificationService: NzNotificationService,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _router: Router
   ) {
     this.userInfo = this._authService.userInfo;
   }
@@ -51,7 +52,6 @@ export class ProfileMenuComponent implements OnInit {
   }
 
   switchLang(lang: string) {
-    console.log('Switching language to:', lang);
     this.selectedLang = lang;
     this._translate.use(lang);
     localStorage.setItem('app_lang', lang);
@@ -89,4 +89,14 @@ export class ProfileMenuComponent implements OnInit {
       'Sorry! This feature is not available right now!'
     );
   }
+  
+    updateProfile(): void {
+      this.toggleDropdown();
+      this._router.navigate(['../profile/update-profile']);
+    }
+    
+    changePassword(): void {
+      this.toggleDropdown();
+      this._router.navigate(['../profile/change-password']);
+    }
 }
