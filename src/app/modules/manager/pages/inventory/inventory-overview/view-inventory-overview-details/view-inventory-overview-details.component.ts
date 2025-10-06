@@ -184,7 +184,6 @@ export class ViewInventoryOverviewDetailsComponent implements OnInit {
       price: showPrice ? item.selling_price : null,
       quantityAvailable: item.quantity_available,
     };
-    console.log('Barcode preview data:', this.barcodePreviewData);
     this.printQuantity = 1;
 
     this.isBarcodeDrawerVisible = true;
