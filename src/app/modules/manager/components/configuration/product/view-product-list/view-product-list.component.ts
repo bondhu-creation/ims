@@ -9,7 +9,7 @@ import { NgZorroCustomModule } from '@app/shared/ng-zorro-custom.module';
   standalone: true,
   imports: [CommonModule, NgZorroCustomModule, LoaderComponent],
   templateUrl: './view-product-list.component.html',
-  styleUrls: ['./view-product-list.component.scss']
+  styleUrls: ['./view-product-list.component.scss'],
 })
 export class ViewProductListComponent {
   @Input() data: any[] = [];
@@ -17,10 +17,23 @@ export class ViewProductListComponent {
   @Output() paginationEvent: EventEmitter<object> = new EventEmitter();
   @Input() loading: boolean = false;
   @Input() totalCount: number = 0;
+  @Input() resetPaginationEvent: EventEmitter<void> = new EventEmitter();
 
   currentIndex: number = 1;
   offset: number = 0;
   pageSize: number = Constants.PAGE_SIZE;
+
+  ngOnInit(): void {
+    this.resetPaginationEvent.subscribe(() => {
+      this.currentIndex = 1;
+      this.offset = 0;
+      this.emitPagination();
+    });
+  }
+
+  emitPagination(): void {
+    this.paginationEvent.emit({ offset: this.offset, limit: this.pageSize });
+  }
 
   onPageIndexChange(pageIndex: number): void {
     this.currentIndex = pageIndex;
@@ -42,5 +55,4 @@ export class ViewProductListComponent {
   getFirstLetter(name: any): any {
     return name[0];
   }
-
 }

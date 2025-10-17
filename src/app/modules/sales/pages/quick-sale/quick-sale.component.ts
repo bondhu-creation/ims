@@ -275,7 +275,7 @@ export class QuickSaleComponent implements OnInit {
   editProduct(index: number): void {
     const product = this.products.at(index).value;
     this.selectedProductIndex = index;
-    this.editingProduct = product;
+    this.editingProduct = { ...product };
   }
 
   resetForm(): void {

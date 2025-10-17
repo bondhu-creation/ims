@@ -93,4 +93,16 @@ export class UpdatePricingModalComponent {
       return 'Cost information for this batch is currently unavailable.';
     }
   }
+
+  getMaximumDiscountText(): string {
+    const sellingPrice = this.form.get('selling_price')?.value;
+    const maxDiscount = this.form.get('maximum_discount')?.value;
+
+    if (sellingPrice && maxDiscount) {
+      const discountedPrice = sellingPrice - maxDiscount;
+      return `Maximum discount: ${maxDiscount} ৳ – Price after discount: ${discountedPrice} ৳`;
+    }
+
+    return 'Enter Selling Price and Maximum Discount to see the calculated price.';
+  }
 }
