@@ -36,6 +36,12 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  openGroupKey: string | null = null;
+
+  toggleGroup(key: string) {
+    this.openGroupKey = this.openGroupKey === key ? null : key;
+  }
+
   /* isActive(route: string): boolean {
     if (route === '/') {
       return this._router.url === '/';
@@ -44,7 +50,9 @@ export class SidebarComponent implements OnInit {
   } */
 
   isActive(route: string): boolean {
-    return ( this._router.url === route || this._router.url.startsWith(route + '/'));
+    return (
+      this._router.url === route || this._router.url.startsWith(route + '/')
+    );
   }
 
   handleClick(): any {
