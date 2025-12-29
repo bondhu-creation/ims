@@ -9,11 +9,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { SmartTranslatePipe } from '@app/shared/pipe/smart-translate.pipe';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterLink, AngularSvgIconModule, SmartTranslatePipe],
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+    selector: 'app-sidebar',
+    imports: [CommonModule, RouterLink, AngularSvgIconModule, SmartTranslatePipe],
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
   @Output() readonly actionEmitter: EventEmitter<object> = new EventEmitter();
@@ -37,9 +36,17 @@ export class SidebarComponent implements OnInit {
   }
 
   openGroupKey: string | null = null;
+  openGroups = new Set<number>();
 
-  toggleGroup(key: string) {
-    this.openGroupKey = this.openGroupKey === key ? null : key;
+  toggleGroup(index: number) {
+    if (this.openGroups.has(index)) {
+      // collapse current open group
+      this.openGroups.clear();
+    } else {
+      // open only this one
+      this.openGroups.clear();
+      this.openGroups.add(index);
+    }
   }
 
   /* isActive(route: string): boolean {
@@ -53,6 +60,10 @@ export class SidebarComponent implements OnInit {
     return (
       this._router.url === route || this._router.url.startsWith(route + '/')
     );
+  }
+
+  isGroupActive(group: any): boolean {
+    return group.items.some((item: any) => this.isActive(item.route));
   }
 
   handleClick(): any {
