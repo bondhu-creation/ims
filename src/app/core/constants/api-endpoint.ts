@@ -102,6 +102,10 @@ export class APIEndpoint {
 
   static GET_PURCHASE_ORDER_REPORT = "/api/v1/manager/reports/get-purchase-order-report";
 
+
+  static GET_CURRENT_STOCK_REPORT_FOR_SALESMAN = "/api/v1/salesman/reports/get-current-stock-report";
+  static GET_PRODUCT_WISE_STOCK_REPORT_FOR_SALESMAN = "/api/v1/salesman/reports/get-product-wise-stock-report";
+
   static GET_USER_NOTES = '/api/v1/profile/notes/get-note-list';
   static GET_NOTE_BY_ID = '/api/v1/profile/notes/get-note-details';
   static CREATE_NOTE = '/api/v1/profile/notes/create-note';

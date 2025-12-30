@@ -81,6 +81,13 @@ const routes: Routes = [
               ).then((m) => m.ViewProductReturnDetailsComponent),
           }
         ]
+      },
+      {
+        path: 'report',
+        loadComponent: () =>
+          import('./pages/salesman-reports/salesman-reports.component').then(
+            (m) => m.SalesmanReportsComponent
+          ),
       }
     ],
   },

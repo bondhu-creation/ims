@@ -166,5 +166,15 @@ export class Menu {
         },
       ],
     },
+    {
+      group: 'Reports',
+      items: [
+        {
+          icon: 'assets/icons/report.svg',
+          label: 'Reports',
+          route: '/sales/report',
+        },
+      ],
+    }
   ];
 }
