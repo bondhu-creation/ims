@@ -57,6 +57,22 @@ export class ReportComponent {
         },
       ],
     },
+    {
+      key: 'stock_adjustment',
+      title: 'manager.report.stock_adjustment.title',
+      expanded: false,
+      sub_reports: [
+        {
+          key: 'stock_adjustment_report',
+          title:
+            'manager.report.stock_adjustment.sub_reports.stock_adjustment_report.title',
+          description:
+            'manager.report.stock_adjustment.sub_reports.stock_adjustment_report.description',
+          url: APIEndpoint.GET_STOCK_ADJUSTMENT_REPORT,
+          filters: ['product_oid', 'date_range'],
+        },
+      ],
+    },
     // {
     //   key: 'purchase',
     //   title: 'manager.report.purchase.title',

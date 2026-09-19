@@ -89,6 +89,11 @@ export class APIEndpoint {
   static GET_PRODUCT_DISPOSE_LIST = "/api/v1/manager/product-dispose/get-product-dispose-list";
   static GET_PRODUCT_DISPOSE_DETAILS = "/api/v1/manager/product-dispose/get-product-dispose-details";
 
+  static GET_BATCH_LIST_FOR_ADJUSTMENT_DROPDOWN = "/api/v1/manager/stock-adjustment/get-batch-list-for-adjustment-dropdown";
+  static CREATE_STOCK_ADJUSTMENT = "/api/v1/manager/stock-adjustment/create-stock-adjustment";
+  static GET_STOCK_ADJUSTMENT_LIST = "/api/v1/manager/stock-adjustment/get-stock-adjustment-list";
+  static GET_STOCK_ADJUSTMENT_DETAILS = "/api/v1/manager/stock-adjustment/get-stock-adjustment-details";
+
   static CHANGE_PASSWORD = "/api/v1/profile/change-password/change-user-password";
   static VERIFY_OTP_FOR_PASSWORD_CHANGE = "/api/v1/profile/change-password/verify-otp-for-password-change";
 
@@ -101,6 +106,8 @@ export class APIEndpoint {
   static GET_PRODUCT_WISE_STOCK_REPORT = "/api/v1/manager/reports/get-product-wise-stock-report";
 
   static GET_PURCHASE_ORDER_REPORT = "/api/v1/manager/reports/get-purchase-order-report";
+
+  static GET_STOCK_ADJUSTMENT_REPORT = "/api/v1/manager/reports/get-stock-adjustment-report";
 
 
   static GET_CURRENT_STOCK_REPORT_FOR_SALESMAN = "/api/v1/salesman/reports/get-current-stock-report";

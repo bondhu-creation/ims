@@ -92,6 +92,29 @@ export const DROPDOWN_OPTIONS = {
     { label: 'Item was part of an exchange', value: 'exchange' },
     { label: 'Other (please specify)', value: 'other' },
   ],
+  STOCK_ADJUSTMENT_TYPES: [
+    { label: 'Increase', value: 'increase' },
+    { label: 'Decrease', value: 'decrease' },
+  ],
+  // Split by direction: offering "Theft" while someone is adding stock makes no sense.
+  STOCK_ADJUSTMENT_INCREASE_REASONS: [
+    { label: 'Found Stock', value: 'found_stock' },
+    { label: 'Stock Count Correction', value: 'stock_count_correction' },
+    { label: 'Supplier Bonus / Free Goods', value: 'supplier_bonus' },
+    { label: 'Returned to Stock', value: 'returned_to_stock' },
+    { label: 'Data Entry Correction', value: 'data_entry_correction' },
+    { label: 'Others', value: 'others' },
+  ],
+  STOCK_ADJUSTMENT_DECREASE_REASONS: [
+    { label: 'Damaged in Store', value: 'damaged' },
+    { label: 'Lost', value: 'lost' },
+    { label: 'Theft / Shrinkage', value: 'theft' },
+    { label: 'Stock Count Correction', value: 'stock_count_correction' },
+    { label: 'Internal Use', value: 'internal_use' },
+    { label: 'Sample / Giveaway', value: 'sample_giveaway' },
+    { label: 'Data Entry Correction', value: 'data_entry_correction' },
+    { label: 'Others', value: 'others' },
+  ],
   DISPOSAL_REASONS: [
     { label: 'Expired', value: 'expired' },
     { label: 'Damaged in store', value: 'damaged' },

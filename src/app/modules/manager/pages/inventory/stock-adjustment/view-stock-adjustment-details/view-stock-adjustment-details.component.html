@@ -1,0 +1,87 @@
+<app-loader *ngIf="loading" [isVisible]="loading"></app-loader>
+<div *ngIf="!loading" class="p-4 space-y-4">
+      <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-medium animate-text">Stock Adjustment Details</h2>
+            <secondary-button (click)="goBack()" [label]="'Back'"></secondary-button>
+      </div>
+
+      <div *ngIf="adjustmentDetails" class="border-[0.5px] rounded-md p-4 space-y-4">
+            <!-- Headline: what happened to the stock -->
+            <div class="flex flex-wrap items-center gap-3">
+                  <nz-tag [nzColor]="isIncrease ? 'green' : 'red'" class="text-base">
+                        {{ getTypeLabel() }} {{ getSignedQuantity() }} {{ adjustmentDetails?.unit_type }}
+                  </nz-tag>
+                  <span class="text-lg font-medium">
+                        {{ adjustmentDetails?.quantity_before }} &rarr; {{ adjustmentDetails?.quantity_after }}
+                  </span>
+            </div>
+
+            <nz-alert *ngIf="hasMovedSince()" nzType="info" nzShowIcon
+                  [nzMessage]="'This batch now holds ' + adjustmentDetails?.current_quantity_available + '. It has moved since this adjustment was made.'">
+            </nz-alert>
+
+            <nz-divider class="my-2"></nz-divider>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Product</p>
+                        <p class="text-sm">{{ adjustmentDetails?.product_name }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">SKU</p>
+                        <p class="text-sm">{{ adjustmentDetails?.sku }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Batch Code</p>
+                        <p class="text-sm">{{ adjustmentDetails?.batch_code }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Reason</p>
+                        <p class="text-sm">{{ getReasonLabel() }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Unit Cost</p>
+                        <p class="text-sm">{{ adjustmentDetails?.cost_price }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Adjustment Value</p>
+                        <p class="text-sm">{{ adjustmentDetails?.adjustment_value }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Supplier</p>
+                        <p class="text-sm">{{ adjustmentDetails?.supplier_name }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Warehouse</p>
+                        <p class="text-sm">{{ adjustmentDetails?.warehouse_name }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Aisle / Zone</p>
+                        <p class="text-sm">{{ adjustmentDetails?.aisle_name }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Adjusted By</p>
+                        <p class="text-sm">{{ adjustmentDetails?.created_by }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Adjusted On</p>
+                        <p class="text-sm">{{ adjustmentDetails?.created_on }}</p>
+                  </div>
+                  <div>
+                        <p class="text-xs text-gray-500 font-semibold">Status</p>
+                        <p class="text-sm">{{ adjustmentDetails?.status }}</p>
+                  </div>
+            </div>
+
+            <div *ngIf="adjustmentDetails?.notes">
+                  <p class="text-xs text-gray-500 font-semibold">Special Notes</p>
+                  <p class="text-sm">{{ adjustmentDetails?.notes }}</p>
+            </div>
+      </div>
+
+      <div *ngIf="!adjustmentDetails"
+            class="flex flex-col items-center justify-center text-center bg-gray-50 p-8 rounded-md space-y-4">
+            <img src="assets/icons/no_data.svg" alt="No Data Found">
+            <h2 class="text-lg font-semibold text-black">No Data Found</h2>
+      </div>
+</div>

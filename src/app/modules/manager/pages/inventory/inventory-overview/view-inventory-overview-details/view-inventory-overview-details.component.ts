@@ -13,6 +13,7 @@ import { NgZorroCustomModule } from '@app/shared/ng-zorro-custom.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UpdatePricingModalComponent } from '@app/modules/manager/components/inventory/update-pricing-modal/update-pricing-modal.component';
+import { StockAdjustmentModalComponent } from '@app/modules/manager/components/inventory/stock-adjustment-modal/stock-adjustment-modal.component';
 import { FormsModule } from '@angular/forms';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { PrimaryButton } from '@app/shared/components/buttons/primary-button/primary-button.component';
@@ -164,6 +165,47 @@ export class ViewInventoryOverviewDetailsComponent implements OnInit {
         this.updatePricing(result);
       }
     });
+  }
+
+  displayStockAdjustmentModal(item: any): void {
+    const modal = this._modal.create({
+      nzContent: StockAdjustmentModalComponent,
+      nzFooter: null,
+      nzClosable: false,
+      nzData: {
+        inventory_oid: item.inventory_oid,
+        product_oid: this.productDetails?.oid,
+        batch_code: item.batch_code,
+        quantity_available: item.quantity_available,
+        unit_type: this.productDetails?.unit_type,
+      },
+    });
+
+    modal.afterClose.subscribe((result) => {
+      if (result) {
+        this.adjustStock(result);
+      }
+    });
+  }
+
+  adjustStock(payload: any): void {
+    this.loading = true;
+    this._httpService
+      .post(APIEndpoint.CREATE_STOCK_ADJUSTMENT, payload)
+      .pipe(
+        takeUntilDestroyed(this._destroyRef),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe({
+        next: (res: any) => {
+          this._notificationService.success('Success!', res?.body?.message);
+          this.loadItemDetails();
+        },
+        error: (err: any) => {
+          console.log(err);
+          this._notificationService.error('Error!', err?.error?.message);
+        },
+      });
   }
 
   generateBarcode(item: any): void {

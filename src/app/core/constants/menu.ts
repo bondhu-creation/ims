@@ -101,6 +101,11 @@ export class Menu {
           label: 'Dispose',
           route: '/manager/inventory/product-dispose',
         },
+        {
+          icon: 'assets/icons/stock-adjustment.svg',
+          label: 'Stock Adjustment',
+          route: '/manager/inventory/stock-adjustment',
+        },
       ],
     },
     {

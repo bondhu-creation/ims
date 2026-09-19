@@ -347,6 +347,37 @@ const routes: Routes = [
                   ).then((m) => m.ViewProductDisposeDetailsComponent),
               }
             ]
+          },
+          {
+            path: 'stock-adjustment',
+            children: [
+              {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full',
+              },
+              {
+                path: 'list',
+                loadComponent: () =>
+                  import(
+                    './pages/inventory/stock-adjustment/display-stock-adjustment-list/display-stock-adjustment-list.component'
+                  ).then((m) => m.DisplayStockAdjustmentListComponent),
+              },
+              {
+                path: 'create-stock-adjustment',
+                loadComponent: () =>
+                  import(
+                    './pages/inventory/stock-adjustment/create-stock-adjustment/create-stock-adjustment.component'
+                  ).then((m) => m.CreateStockAdjustmentComponent),
+              },
+              {
+                path: 'view-stock-adjustment/:oid',
+                loadComponent: () =>
+                  import(
+                    './pages/inventory/stock-adjustment/view-stock-adjustment-details/view-stock-adjustment-details.component'
+                  ).then((m) => m.ViewStockAdjustmentDetailsComponent),
+              }
+            ]
           }
         ],
       },

@@ -1,0 +1,85 @@
+<div class="rounded-md bg-white">
+      <!-- Form -->
+      <form nz-form [formGroup]="form" [nzLayout]="'vertical'" (ngSubmit)="handleForm()">
+            <div class="grid grid-cols-1 md:gap-x-6 md:grid-cols-2 lg:grid-cols-3 border-[0.5px] p-4 rounded-md">
+                  <!-- inventory_oid -->
+                  <nz-form-item>
+                        <nz-form-label [nzRequired]="hasRequiredValidator('inventory_oid')">Product / Batch</nz-form-label>
+                        <nz-form-control nzErrorTip="Product / Batch is required.">
+                              <nz-select class="w-full" formControlName="inventory_oid" nz-input nzAllowClear
+                                    nzShowSearch nzPlaceHolder="Select Product Batch">
+                                    <ng-container *ngFor="let item of batchList">
+                                          <nz-option [nzLabel]="item.label" [nzValue]="item.inventory_oid"></nz-option>
+                                    </ng-container>
+                              </nz-select>
+                        </nz-form-control>
+                  </nz-form-item>
+                  <!-- available_quantity -->
+                  <nz-form-item>
+                        <nz-form-label>Available Quantity</nz-form-label>
+                        <nz-form-control>
+                              <input formControlName="available_quantity" nz-input placeholder="Select a batch first" />
+                        </nz-form-control>
+                  </nz-form-item>
+                  <!-- adjustment_type -->
+                  <nz-form-item>
+                        <nz-form-label [nzRequired]="hasRequiredValidator('adjustment_type')">Adjustment Type</nz-form-label>
+                        <nz-form-control nzErrorTip="Adjustment Type is required.">
+                              <nz-select class="w-full" formControlName="adjustment_type" nz-input
+                                    nzPlaceHolder="Select Adjustment Type">
+                                    <ng-container *ngFor="let item of adjustmentTypes">
+                                          <nz-option [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+                                    </ng-container>
+                              </nz-select>
+                        </nz-form-control>
+                  </nz-form-item>
+                  <!-- quantity -->
+                  <nz-form-item>
+                        <nz-form-label [nzRequired]="hasRequiredValidator('quantity')">
+                              {{ isDecrease ? 'Quantity to Decrease' : 'Quantity to Increase' }}
+                        </nz-form-label>
+                        <nz-form-control>
+                              <nz-input-number class="w-full" formControlName="quantity" [nzMin]="1"
+                                    [nzMax]="maxQuantity ?? 999999999"
+                                    nzPlaceHolder="Enter Quantity"></nz-input-number>
+                        </nz-form-control>
+                  </nz-form-item>
+                  <!-- reason -->
+                  <nz-form-item>
+                        <nz-form-label [nzRequired]="hasRequiredValidator('reason')">Reason</nz-form-label>
+                        <nz-form-control nzErrorTip="Reason is required.">
+                              <nz-select class="w-full" formControlName="reason" nz-input nzAllowClear
+                                    nzPlaceHolder="Select Reason">
+                                    <ng-container *ngFor="let item of reasonList">
+                                          <nz-option [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+                                    </ng-container>
+                              </nz-select>
+                        </nz-form-control>
+                  </nz-form-item>
+                  <!-- notes -->
+                  <nz-form-item>
+                        <nz-form-label>Special Notes</nz-form-label>
+                        <nz-form-control>
+                              <textarea rows="2" formControlName="notes" nz-input placeholder="Special Note (if any)"
+                                    nzAutosize></textarea>
+                        </nz-form-control>
+                  </nz-form-item>
+            </div>
+
+            <!-- Live effect on stock -->
+            <nz-alert class="mt-4 block" [nzType]="isOverDrawing() ? 'error' : 'info'" nzShowIcon
+                  [nzMessage]="getResultingQuantityText()">
+            </nz-alert>
+            <nz-alert *ngIf="isOverDrawing()" class="mt-2 block" nzType="warning" nzShowIcon
+                  [nzMessage]="'This batch does not hold enough stock for that decrease.'">
+            </nz-alert>
+
+            <!-- Actions -->
+            <div class="flex justify-end mt-4">
+                  <div class="flex items-center gap-4">
+                        <secondary-button (click)="goBack()" [label]="'Cancel'"></secondary-button>
+                        <primary-button [label]="'Submit'" [loading]="loading" [type]="'submit'"></primary-button>
+                  </div>
+            </div>
+      </form>
+</div>

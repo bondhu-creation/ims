@@ -1,0 +1,74 @@
+<div class="rounded-md bg-white max-w-full w-full">
+      <form nz-form [formGroup]="form" [nzLayout]="'vertical'" (ngSubmit)="handleForm()" class="space-y-4">
+            <div class="border-[0.5px] p-4 rounded-sm">
+                  <h2 class="text-xl font-medium mb-4">Adjust Stock - {{ modalData.batch_code }}</h2>
+
+                  <nz-alert [nzType]="isOverDrawing() ? 'error' : 'info'" nzShowIcon
+                        class="text-sm mb-3 px-3 py-2 rounded-md" [nzMessage]="null"
+                        [innerHTML]="getResultingQuantityText()">
+                  </nz-alert>
+
+                  <div class="grid grid-cols-1 gap-4">
+                        <!-- Adjustment Type -->
+                        <nz-form-item>
+                              <nz-form-label [nzRequired]="hasRequiredValidator('adjustment_type')">
+                                    Adjustment Type
+                              </nz-form-label>
+                              <nz-form-control nzErrorTip="Adjustment Type is Required.">
+                                    <nz-select class="w-full" formControlName="adjustment_type"
+                                          nzPlaceHolder="Select Adjustment Type">
+                                          <ng-container *ngFor="let item of adjustmentTypes">
+                                                <nz-option [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+                                          </ng-container>
+                                    </nz-select>
+                              </nz-form-control>
+                        </nz-form-item>
+
+                        <!-- Quantity -->
+                        <nz-form-item>
+                              <nz-form-label [nzRequired]="hasRequiredValidator('quantity')">
+                                    {{ isDecrease ? 'Quantity to Decrease' : 'Quantity to Increase' }}
+                              </nz-form-label>
+                              <nz-form-control nzErrorTip="Quantity is Required.">
+                                    <nz-input-number class="w-full" formControlName="quantity" [nzMin]="1"
+                                          [nzMax]="maxQuantity" nzPlaceHolder="Enter Quantity"></nz-input-number>
+                              </nz-form-control>
+                        </nz-form-item>
+
+                        <!-- Reason -->
+                        <nz-form-item>
+                              <nz-form-label [nzRequired]="hasRequiredValidator('reason')">Reason</nz-form-label>
+                              <nz-form-control nzErrorTip="Reason is Required.">
+                                    <nz-select class="w-full" formControlName="reason" nzAllowClear
+                                          nzPlaceHolder="Select Reason">
+                                          <ng-container *ngFor="let item of reasonList">
+                                                <nz-option [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+                                          </ng-container>
+                                    </nz-select>
+                              </nz-form-control>
+                        </nz-form-item>
+
+                        <!-- Notes -->
+                        <nz-form-item>
+                              <nz-form-label>Special Notes</nz-form-label>
+                              <nz-form-control>
+                                    <textarea rows="2" formControlName="notes" nz-input
+                                          placeholder="Special Note (if any)" nzAutosize></textarea>
+                              </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-alert *ngIf="isOverDrawing()" nzType="warning" nzShowIcon nzBorderless
+                              [nzMessage]="'This batch does not hold enough stock for that decrease.'"
+                              class="text-sm rounded-md">
+                        </nz-alert>
+                  </div>
+            </div>
+            <!-- Actions -->
+            <div class="flex justify-end mt-4">
+                  <div class="flex items-center gap-4">
+                        <secondary-button (click)="closeModal()" [label]="'Cancel'"></secondary-button>
+                        <primary-button [label]="'Submit'" [loading]="loading" [type]="'submit'"></primary-button>
+                  </div>
+            </div>
+      </form>
+</div>
