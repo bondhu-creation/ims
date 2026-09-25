@@ -35,6 +35,30 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'inventory',
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full',
+          },
+          {
+            path: 'list',
+            loadComponent: () =>
+              import(
+                './pages/inventory/display-inventory-list/display-inventory-list.component'
+              ).then((m) => m.DisplayInventoryListComponent),
+          },
+          {
+            path: 'view-product/:oid',
+            loadComponent: () =>
+              import(
+                './pages/inventory/view-inventory-details/view-inventory-details.component'
+              ).then((m) => m.ViewInventoryDetailsComponent),
+          },
+        ],
+      },
+      {
         path: 'invoice',
         children: [
           {

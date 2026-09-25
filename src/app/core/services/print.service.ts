@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { COMPANY_INFO } from '../constants/company-info';
+import { Constants } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -175,80 +176,133 @@ export class PrintService {
     });
   }
 
+  // One sticker per page for a gap-sensing sticker printer: the page is exactly
+  // the sticker size (Constants.BARCODE_LABEL_SIZE) and nothing may overflow it.
+  // The barcode is stretched to the space left after the text lines, so the
+  // same layout works if the roll size changes.
   private generateBarcodeHTML(data: any): string {
+    const { width, height } = Constants.BARCODE_LABEL_SIZE;
+    const escapeHTML = (value: any) =>
+      String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    const hasPrice = data.price !== null && data.price !== undefined;
+
     return `
     <html>
       <head>
         <style>
           @page {
-            size: 58mm auto;
+            size: ${width}mm ${height}mm;
             margin: 0;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          html, body {
+            margin: 0;
+            padding: 0;
+            width: ${width}mm;
+            height: ${height}mm;
+            overflow: hidden;
           }
 
           body {
-            margin: 0;
-            padding: 0;
             font-family: Arial, Helvetica, sans-serif;
-            width: 58mm;
             text-align: center;
             text-transform: uppercase;
-            font-size: 9px;
+            color: #000;
           }
 
           .label {
-            width: 50mm;
-            margin: 0 auto;
-            padding-left: 4mm;
-          }
-
-          .company, .product, .price {
-            margin: 1px 0;
-            line-height: 1.3;
-            text-align: center;
+            width: ${width}mm;
+            height: ${height}mm;
+            padding: 1.5mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
           }
 
           .company {
+            font-size: 7px;
             font-weight: bold;
-            font-size: 8px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .product {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
+            line-height: 1.15;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+
+          .barcode {
+            flex: 1 1 auto;
+            min-height: 0;
+            max-height: ${(height * 0.35).toFixed(1)}mm;
+            margin-top: 0.5mm;
+          }
+
+          .barcode svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+
+          .code {
+            margin-top: 1mm;
+            font-size: 7px;
+            font-weight: bold;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
           }
 
           .price {
-            font-weight: bold;
             font-size: 10px;
-          }
-
-          svg {
-            display: block;
-            margin: 0 auto;
-            padding: 0;
+            font-weight: bold;
+            line-height: 1.2;
           }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
       </head>
       <body>
         <div class="label">
-          <div class="company">${data.companyName}</div>
-          <div class="product">${data.productName}</div>
-          <svg id="barcode"></svg>
-          <div class="price">৳ ${data.price?.toFixed(2)}</div>
+          <div class="company">${escapeHTML(data.companyName)}</div>
+          <div class="product">${escapeHTML(data.productName)}</div>
+          <div class="barcode"><svg id="barcode"></svg></div>
+          <div class="code">${escapeHTML(data.batchCode)}</div>
+          ${hasPrice ? `<div class="price">৳ ${Number(data.price).toFixed(2)}</div>` : ''}
         </div>
 
         <script>
-          JsBarcode("#barcode", "${data.batchCode}", {
+          JsBarcode("#barcode", "${escapeHTML(data.batchCode)}", {
             format: "CODE128",
-            width: 0.9,
-            height: 25,
-            displayValue: true,
-            fontSize: 10,
+            width: 2,
+            height: 100,
+            displayValue: false,
             margin: 0,
-            textMargin: 0,
-            fontOptions: "bold"
+            // Blank quiet zone of 10 bar widths each side, so scanners find the edges.
+            marginLeft: 20,
+            marginRight: 20
           });
+          // Scale the bars to the box: every bar grows by the same factor, so it stays scannable.
+          var svg = document.getElementById("barcode");
+          svg.setAttribute("viewBox", "0 0 " + svg.getAttribute("width").replace("px", "") + " " + svg.getAttribute("height").replace("px", ""));
+          svg.setAttribute("preserveAspectRatio", "none");
+          svg.removeAttribute("width");
+          svg.removeAttribute("height");
+          svg.removeAttribute("style");
         </script>
       </body>
     </html>

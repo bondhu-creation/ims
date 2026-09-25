@@ -162,6 +162,16 @@ export class Menu {
       ],
     },
     {
+      group: 'Inventory',
+      items: [
+        {
+          icon: 'assets/icons/inventory.svg',
+          label: 'Inventory',
+          route: '/sales/inventory',
+        },
+      ],
+    },
+    {
       group: 'Employee',
       items: [
         {

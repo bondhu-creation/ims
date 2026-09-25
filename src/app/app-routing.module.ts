@@ -5,6 +5,14 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 const routes: Routes = [
+  // Public page (no login). Must stay above the guarded '' route, which would otherwise match it.
+  {
+    path: 'release-log',
+    loadComponent: () =>
+      import('./modules/release-log/release-log.component').then(
+        (m) => m.ReleaseLogComponent
+      ),
+  },
   {
     path: '',
     resolve: { userInfo: UserInfoResolver },

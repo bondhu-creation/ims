@@ -11,6 +11,7 @@ import { HttpService } from '@app/core/services/http.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { finalize } from 'rxjs';
 import { ViewInvoiceListComponent } from '@app/modules/manager/components/inventory/invoice/view-invoice-list/view-invoice-list.component';
+import { PrintService } from '@app/core/services/print.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -44,7 +45,8 @@ export class InvoiceListComponent implements OnInit {
     private _destroyRef: DestroyRef,
     private _notificationService: NzNotificationService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _printService: PrintService
   ) {}
 
   ngOnInit(): void {
@@ -144,11 +146,26 @@ export class InvoiceListComponent implements OnInit {
     });
   }
 
+  // Same flow as the salesman invoice list, so the receipt prints identically.
   handlePrint(value: any): any {
-    // todo!: Implement print functionality
-    this._notificationService.warning(
-      'Warning!',
-      'Print functionality is not implemented yet.'
-    );
+    this.loading = true;
+    this._httpService
+      .get(APIEndpoint.GET_INVOICE_DETAILS, { oid: value })
+      .pipe(
+        takeUntilDestroyed(this._destroyRef),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe({
+        next: (res: any) => {
+          if (res.status === 200) {
+            const invoiceDetails = res.body.data;
+            this._printService.printReceipt(invoiceDetails);
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+          this._notificationService.error('Error!', err?.error?.message);
+        },
+      });
   }
 }

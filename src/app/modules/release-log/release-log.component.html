@@ -1,0 +1,60 @@
+<div class="min-h-screen bg-[#F7F7F9] px-4 py-10">
+      <div class="max-w-3xl mx-auto space-y-8">
+            <!-- Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                        <img class="h-14" src="assets/icons/logo.svg" alt="IMS Logo">
+                        <div>
+                              <h1 class="text-2xl font-bold text-[#180B26]">Release Log</h1>
+                              <p class="text-sm text-gray-600">What's new in IMS</p>
+                        </div>
+                  </div>
+                  <a routerLink="/auth/login" class="text-sm font-medium text-[#180B26] hover:underline">
+                        Back to Sign In
+                  </a>
+            </div>
+
+            <!-- Releases, newest first; click a date to expand or collapse -->
+            <div class="space-y-4">
+                  <section *ngFor="let release of releaseLogs; let i = index"
+                        class="bg-white border rounded-md shadow-sm overflow-hidden">
+                        <button type="button" (click)="toggle(i)" [attr.aria-expanded]="expanded[i]"
+                              class="w-full flex items-center justify-between gap-4 px-6 py-4 text-left hover:bg-gray-50">
+                              <div>
+                                    <p class="text-xs uppercase tracking-wide text-gray-500">Date</p>
+                                    <h2 class="text-lg font-semibold text-[#180B26]">{{ release.date }}</h2>
+                              </div>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="size-5 text-gray-500 transition-transform duration-200"
+                                    [ngClass]="expanded[i] ? 'rotate-180' : ''">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                              </svg>
+                        </button>
+
+                        <div *ngIf="expanded[i]" class="px-6 pb-6 space-y-5 border-t">
+                              <div class="pt-4 space-y-1">
+                                    <p class="text-xs uppercase tracking-wide text-gray-500">Overview</p>
+                                    <p class="text-gray-700">{{ release.overview }}</p>
+                              </div>
+
+                              <ul class="space-y-4">
+                                    <li *ngFor="let item of release.items" class="flex items-start gap-3">
+                                          <span class="flex-shrink-0 w-20 text-center text-xs font-semibold rounded px-2 py-1 mt-0.5"
+                                                [ngClass]="getTypeClass(item.type)">{{ item.type }}</span>
+                                          <div>
+                                                <h3 class="font-semibold text-[#180B26]">{{ item.title }}</h3>
+                                                <p class="text-sm text-gray-600">{{ item.description }}</p>
+                                          </div>
+                                    </li>
+                              </ul>
+                        </div>
+                  </section>
+            </div>
+
+            <p class="text-center text-sm text-gray-500">
+                  IMS · Implemented By
+                  <a href="https://sakib.app" target="_blank" rel="noopener noreferrer"
+                        class="font-medium text-[#594ED1] hover:underline">Sakib</a>
+            </p>
+      </div>
+</div>

@@ -12,6 +12,8 @@ export class Constants {
   static MOBILE_NO_REGEX = /^((01[3-9]{1})[0-9]{8})$/;
   static ONLY_NUMERIC_REGEX = /^\d+(\.\d+)?$/;
   static PAGE_SIZE = 10;
+  // Sticker size of the barcode label roll, in mm. Change this when the roll size changes.
+  static BARCODE_LABEL_SIZE = { width: 40, height: 30 };
   static AUTH_STORE_KEY = 'sad';
 }
 

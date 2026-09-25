@@ -48,6 +48,10 @@
                               <p>Verified By</p>
                               <p class="font-semibold">{{ purchaseDetails?.verified_by }}</p>
                         </div>
+                        <div *ngIf="purchaseDetails.status === 'Verified' && purchaseDetails?.batch_code" class="space-y-1">
+                              <p>Batch Code</p>
+                              <p class="font-semibold">{{ purchaseDetails?.batch_code }}</p>
+                        </div>
                   </div>
             </div>
             <div class="border-[0.5px] p-4 rounded-md">

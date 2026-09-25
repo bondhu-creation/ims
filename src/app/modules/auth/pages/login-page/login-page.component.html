@@ -1,5 +1,5 @@
 <div class="h-screen grid md:grid-cols-3 lg:grid-cols-4">
-  <div class="hidden md:block h-full login_banner p-10 space-y-8">
+  <div class="hidden md:flex md:flex-col h-full login_banner p-10 space-y-8">
     <div class="flex gap-4 items-center">
       <img class="h-20" src="assets/icons/logo.svg" alt="IMS Logo">
       <h2 class="text-2xl font-bold">IMS</h2>
@@ -56,6 +56,12 @@
         </div>
       </li>
     </ul>
+    <!-- Release log, pinned to the bottom of the panel -->
+    <div class="!mt-auto pt-8">
+      <a routerLink="/release-log" class="text-sm font-medium text-gray-800 hover:underline">
+        Release Log
+      </a>
+    </div>
   </div>
   <div class="md:col-span-2 lg:col-span-3 flex justify-center items-center p-5 md:p-0 login_sm_banner">
     <div
