@@ -25,6 +25,21 @@ export class ReportComponent {
   reportGroupColumns: any;
   reportGroups = [
     {
+      key: 'daily_sales',
+      title: 'manager.report.sales.title',
+      expanded: false,
+      sub_reports: [
+        {
+          key: 'daily_sales_report',
+          title: 'manager.report.sales.sub_reports.daily_sales_report.title',
+          description:
+            'manager.report.sales.sub_reports.daily_sales_report.description',
+          url: APIEndpoint.GET_DAILY_SALES_REPORT,
+          filters: ['report_date'],
+        },
+      ],
+    },
+    {
       key: 'inventory',
       title: 'manager.report.inventory.title',
       expanded: false,
@@ -259,7 +274,10 @@ export class ReportComponent {
             now.getMonth() + 1
           )}${now.getFullYear()}${pad(now.getHours())}${pad(now.getMinutes())}`;
 
-          const fileName = `${report_key}_${timestamp}.xlsx`;
+          // A one-day report is named after the day it covers, not when it was downloaded.
+          const fileName = payload?.report_date
+            ? `${report_key}_${payload.report_date}.xlsx`
+            : `${report_key}_${timestamp}.xlsx`;
 
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');

@@ -92,6 +92,10 @@
       "sales": {
         "title": "Sales Reports",
         "sub_reports": {
+          "daily_sales_report": {
+            "title": "Daily Sales Report",
+            "description": "Item-wise sales, invoices, refunds and the cash expected in the drawer for one day, for the whole shop."
+          },
           "sales_summary": {
             "title": "Sales Summary Report",
             "description": "View overall sales performance within a selected date range."
@@ -107,6 +111,11 @@
         }
       },
       "filter": {
+        "report_date": {
+          "label": "Sales Date",
+          "placeholder": "Select Date",
+          "required_error_message": "Sales date is required."
+        },
         "date_range": {
           "label": "Date",
           "start_date_placeholder": "Start Date",

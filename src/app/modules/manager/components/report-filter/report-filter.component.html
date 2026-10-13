@@ -82,6 +82,17 @@
                   </nz-form-control>
             </nz-form-item>
             }
+            @if (form.get('report_date')) {
+            <nz-form-item>
+                  <nz-form-label nzRequired>{{ 'manager.report.filter.report_date.label' | translate }}</nz-form-label>
+                  <nz-form-control
+                        nzErrorTip="{{ 'manager.report.filter.report_date.required_error_message' | translate }}">
+                        <nz-date-picker class="w-full" formControlName="report_date" nzFormat="dd/MM/yyyy"
+                              [nzDisabledDate]="disableFutureDate"
+                              nzPlaceHolder="{{ 'manager.report.filter.report_date.placeholder' | translate }}"></nz-date-picker>
+                  </nz-form-control>
+            </nz-form-item>
+            }
       </div>
       }
 

@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { APIEndpoint } from '@app/core/constants/api-endpoint';
 import { HttpService } from '@app/core/services/http.service';
 import { PrimaryButton } from '@app/shared/components/buttons/primary-button/primary-button.component';
@@ -93,12 +93,36 @@ export class ReportFilterComponent implements OnInit {
 
   buildForm(): void {
     this.filters.forEach((key) => {
+      if (key === 'report_date') {
+        // A single-day report always needs a day; it starts on today.
+        this.form.addControl(key, this._fb.control(new Date(), Validators.required));
+        return;
+      }
       this.form.addControl(key, this._fb.control(null)); // optional (no validator)
     });
   }
 
+  // No picking a day that has not happened yet.
+  disableFutureDate = (date: Date): boolean =>
+    new Date(date).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0);
+
   onSubmit(): void {
-    this.actionEmitter.emit({ action: 'submit', value: this.form.value });
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach((control) => {
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      });
+      return;
+    }
+    const value = { ...this.form.value };
+    if (value.report_date instanceof Date) {
+      // Send the shop's local date, not an ISO timestamp, which would shift to the
+      // previous day for anything picked before 6 AM Bangladesh time.
+      const date: Date = value.report_date;
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      value.report_date = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    }
+    this.actionEmitter.emit({ action: 'submit', value });
   }
 
   handleCancel(): void {
