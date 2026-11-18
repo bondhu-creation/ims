@@ -27,6 +27,7 @@ export class ManagerDashboardComponent implements OnInit {
   data: any;
   recent_sales: any[] = [];
   trending_products: any[] = [];
+  slow_moving_products: any[] = [];
   loading: boolean = false;
 
   constructor(
@@ -62,6 +63,7 @@ export class ManagerDashboardComponent implements OnInit {
             this.data = res.body.data;
             this.recent_sales = res.body?.data?.recent_sales ?? [];
             this.trending_products = res.body?.data?.trending_products_this_month ?? [];
+            this.slow_moving_products = res.body?.data?.slow_moving_products_this_month ?? [];
           }
         },
         error: (err: any) => {

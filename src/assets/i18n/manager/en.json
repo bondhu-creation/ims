@@ -96,6 +96,14 @@
             "title": "Daily Sales Report",
             "description": "Item-wise sales, invoices, refunds and the cash expected in the drawer for one day, for the whole shop."
           },
+          "trending_products_report": {
+            "title": "Trending Products Report",
+            "description": "Best-selling products ranked by units sold, with revenue and current stock. Leave the date range empty for all time."
+          },
+          "slow_moving_products_report": {
+            "title": "Slow-Moving Products Report",
+            "description": "Products still in stock that sold the least (or nothing) in the date range, with their last sale date."
+          },
           "sales_summary": {
             "title": "Sales Summary Report",
             "description": "View overall sales performance within a selected date range."

@@ -15,6 +15,43 @@ export interface ReleaseLog {
 
 export const RELEASE_LOGS: ReleaseLog[] = [
   {
+    date: '18 November 2026',
+    overview:
+      'Manager role can now see which products are selling fast and which are sitting on the shelf, on the dashboard and in two new Excel reports, to decide what to reorder and which stock to display better, discount or stop buying.',
+    items: [
+      {
+        type: 'Improved',
+        title: 'Top 20 trending products on the dashboard',
+        description:
+          'The Trending Products card now shows the 20 best sellers of this month instead of 5, numbered from the best seller down. The list scrolls inside the card.',
+      },
+      {
+        type: 'New',
+        title: 'Slow-moving products on the dashboard',
+        description:
+          'A new card lists the 20 products with stock ready to sell that sold the least this month, with how many were sold and how many are in stock. Products not sold at all this month show 0 in red.',
+      },
+      {
+        type: 'New',
+        title: 'Trending Products Report',
+        description:
+          'Open Reports, choose Trending Products Report under Sales Reports, pick a date range and optionally a category, and click Generate. The Excel file ranks every product sold by units sold, with invoices, revenue, stock left and last sale date. Leave the date range empty to cover all sales so far.',
+      },
+      {
+        type: 'New',
+        title: 'Slow-Moving Products Report',
+        description:
+          'Lists every product with stock ready to sell, starting with those that sold nothing in the chosen period, with stock quantity and value at cost, units sold, last sale date (or Never sold) and days since then. Only confirmed sales are counted, not drafts.',
+      },
+      {
+        type: 'Fixed',
+        title: 'Date range in the Stock Adjustment Report',
+        description:
+          'Depending on the time of day the range was picked, some adjustments on the first or last day of the range could be left out. The range now always covers the full days you pick.',
+      },
+    ],
+  },
+  {
     date: '13 October 2026',
     overview:
       'A new Daily Sales Report shows everything sold on a day, item by item, and how much cash should be in the drawer, so whoever closes the shop can count the cash and check it against the Google Drive sheet before leaving.',

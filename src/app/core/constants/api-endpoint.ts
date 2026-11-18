@@ -109,6 +109,8 @@ export class APIEndpoint {
 
   static GET_STOCK_ADJUSTMENT_REPORT = "/api/v1/manager/reports/get-stock-adjustment-report";
   static GET_DAILY_SALES_REPORT = "/api/v1/manager/reports/get-daily-sales-report";
+  static GET_TRENDING_PRODUCTS_REPORT = "/api/v1/manager/reports/get-trending-products-report";
+  static GET_SLOW_MOVING_PRODUCTS_REPORT = "/api/v1/manager/reports/get-slow-moving-products-report";
 
 
   static GET_CURRENT_STOCK_REPORT_FOR_SALESMAN = "/api/v1/salesman/reports/get-current-stock-report";

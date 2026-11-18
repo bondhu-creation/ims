@@ -1,3 +1,9 @@
+// Top-20 lists scroll inside the card instead of stretching the dashboard.
+.product-list-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
 :host {
   ::ng-deep {
     .ant-card-body {

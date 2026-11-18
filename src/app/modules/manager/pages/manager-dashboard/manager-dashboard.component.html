@@ -80,16 +80,37 @@
                   </ng-template>
             </nz-card>
             <nz-card [nzTitle]="trendingTitle" nzBordered="true" style="margin-top: 16px;">
-                  <nz-list [nzDataSource]="trending_products" [nzRenderItem]="trendingItem" nzBordered="false" nzSize="small">
-                        <ng-template #trendingItem let-product>
-                              <nz-list-item>
-                                    <p>Product Name: <span class="font-semibold">{{ product.product_name }}</span></p>
-                                    <p>Total Sold: <span>{{ product.total_sold | safeText }}</span></p>
-                              </nz-list-item>
-                        </ng-template>
-                  </nz-list>
+                  <div class="product-list-scroll">
+                        <nz-list [nzDataSource]="trending_products" [nzRenderItem]="trendingItem" nzBordered="false" nzSize="small">
+                              <ng-template #trendingItem let-product let-i="index">
+                                    <nz-list-item>
+                                          <p><span class="text-gray-400 mr-2">{{ i + 1 }}.</span><span class="font-semibold">{{ product.product_name }}</span></p>
+                                          <p>Sold: <span class="font-semibold">{{ product.total_sold | safeText }}</span></p>
+                                    </nz-list-item>
+                              </ng-template>
+                        </nz-list>
+                  </div>
                   <ng-template #trendingTitle>
-                        <h2 class="font-bold">Trending Products <span class="text-xs font-normal">(This Month)</span></h2>
+                        <h2 class="font-bold">Trending Products <span class="text-xs font-normal">(This Month, Top 20)</span></h2>
+                  </ng-template>
+            </nz-card>
+            <nz-card [nzTitle]="slowMovingTitle" nzBordered="true" style="margin-top: 16px;">
+                  <div class="product-list-scroll">
+                        <nz-list [nzDataSource]="slow_moving_products" [nzRenderItem]="slowMovingItem" nzBordered="false" nzSize="small">
+                              <ng-template #slowMovingItem let-product let-i="index">
+                                    <nz-list-item>
+                                          <p><span class="text-gray-400 mr-2">{{ i + 1 }}.</span><span class="font-semibold">{{ product.product_name }}</span></p>
+                                          <p class="whitespace-nowrap">
+                                                Sold: <span class="font-semibold" [class.text-red-500]="+product.total_sold === 0">{{ product.total_sold }}</span>
+                                                <span class="text-gray-400 mx-1">|</span>
+                                                In stock: <span class="font-semibold">{{ product.available_quantity }}</span>
+                                          </p>
+                                    </nz-list-item>
+                              </ng-template>
+                        </nz-list>
+                  </div>
+                  <ng-template #slowMovingTitle>
+                        <h2 class="font-bold">Slow-Moving Products <span class="text-xs font-normal">(This Month, In Stock)</span></h2>
                   </ng-template>
             </nz-card>
       </div>

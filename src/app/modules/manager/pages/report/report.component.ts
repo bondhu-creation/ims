@@ -37,6 +37,24 @@ export class ReportComponent {
           url: APIEndpoint.GET_DAILY_SALES_REPORT,
           filters: ['report_date'],
         },
+        {
+          key: 'trending_products_report',
+          title:
+            'manager.report.sales.sub_reports.trending_products_report.title',
+          description:
+            'manager.report.sales.sub_reports.trending_products_report.description',
+          url: APIEndpoint.GET_TRENDING_PRODUCTS_REPORT,
+          filters: ['date_range', 'category_oid'],
+        },
+        {
+          key: 'slow_moving_products_report',
+          title:
+            'manager.report.sales.sub_reports.slow_moving_products_report.title',
+          description:
+            'manager.report.sales.sub_reports.slow_moving_products_report.description',
+          url: APIEndpoint.GET_SLOW_MOVING_PRODUCTS_REPORT,
+          filters: ['date_range', 'category_oid'],
+        },
       ],
     },
     {

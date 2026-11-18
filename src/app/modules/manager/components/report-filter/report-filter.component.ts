@@ -115,12 +115,18 @@ export class ReportFilterComponent implements OnInit {
       return;
     }
     const value = { ...this.form.value };
+    // Send the shop's local date, not an ISO timestamp, which would shift to the
+    // previous day for anything picked before 6 AM Bangladesh time.
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const toLocalDate = (date: Date) =>
+      `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
     if (value.report_date instanceof Date) {
-      // Send the shop's local date, not an ISO timestamp, which would shift to the
-      // previous day for anything picked before 6 AM Bangladesh time.
-      const date: Date = value.report_date;
-      const pad = (n: number) => n.toString().padStart(2, '0');
-      value.report_date = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+      value.report_date = toLocalDate(value.report_date);
+    }
+    if (Array.isArray(value.date_range)) {
+      value.date_range = value.date_range.map((d: any) =>
+        d instanceof Date ? toLocalDate(d) : d
+      );
     }
     this.actionEmitter.emit({ action: 'submit', value });
   }
